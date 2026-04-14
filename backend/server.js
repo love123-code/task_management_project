@@ -5,6 +5,9 @@ const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const boardRoutes = require('./routes/boardRoutes');
+app.get("/", (req, res) => {
+  res.send("Backend live hai 🚀");
+});
 const initializeSocket = require('./socket');
 
 const app = express();
