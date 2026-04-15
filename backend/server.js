@@ -32,7 +32,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/boards', boardRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Backend live hai 🚀");
+  res.send("Backend is live");
 });
 
 
