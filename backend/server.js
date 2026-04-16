@@ -1,52 +1,35 @@
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
-const { Server } = require('socket.io');
-
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const boardRoutes = require('./routes/boardRoutes');
-const initializeSocket = require('./socket');
-
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const server = http.createServer(app);
 
 
-const io = new Server(server, {
-  cors: {
-    origin: '*', // temporary (baad me frontend URL dal dena)
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-  }
-});
-
-
-connectDB();
-
-
-app.use(cors());
 app.use(express.json());
 
 
-app.use('/api/auth', authRoutes);
-app.use('/api/boards', boardRoutes);
+app.use(
+  cors({
+    origin: "https://todo-frontend-three-black.vercel.app",
+    credentials: true,
+  })
+);
+
 
 app.get("/", (req, res) => {
-  res.send("Backend is live");
+  res.send("Backend is running 🚀");
 });
 
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+app.get("/api/user", (req, res) => {
+  res.json({
+    message: "User API working ✅",
+  });
 });
 
-
-initializeSocket(io);
-
-
+// ✅ PORT (Render ke liye important)
 const PORT = process.env.PORT || 5000;
 
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
