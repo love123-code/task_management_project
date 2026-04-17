@@ -6,6 +6,8 @@ import JoinBoardModal from '../components/JoinBoardModal'
 import ThemeToggle from '../components/ThemeToggle'
 import '../styles/Dashboard.css'
 
+const BASE_URL = "https://task-management-project-7wls.onrender.com"
+
 function Dashboard() {
   const [boards, setBoards] = useState([])
   const [loading, setLoading] = useState(true)
@@ -22,7 +24,7 @@ function Dashboard() {
   const fetchBoards = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch('/api/boards', {
+      const res = await fetch(`${BASE_URL}/api/boards`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -42,7 +44,7 @@ function Dashboard() {
 
     try {
       const token = localStorage.getItem('token')
-      await fetch(`/api/boards/${boardId}`, {
+      await fetch(`${BASE_URL}/api/boards/${boardId}`, {  
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

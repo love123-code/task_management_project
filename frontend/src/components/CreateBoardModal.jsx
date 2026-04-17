@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const BASE_URL = "https://task-management-project-7wls.onrender.com"
+
 function CreateBoardModal({ onClose, onSuccess }) {
   const [name, setName] = useState('Task Board')
   const [type, setType] = useState('solo')
@@ -13,7 +15,9 @@ function CreateBoardModal({ onClose, onSuccess }) {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch('/api/boards', {
+
+      // ✅ FIXED LINE (IMPORTANT)
+      const res = await fetch(`${BASE_URL}/api/boards`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +34,7 @@ function CreateBoardModal({ onClose, onSuccess }) {
         setError(data.message)
       }
     } catch (error) {
-      setError('Failed to create board')
+      setError('Server is waking up, please wait...')
     } finally {
       setLoading(false)
     }
@@ -69,8 +73,7 @@ function CreateBoardModal({ onClose, onSuccess }) {
                 padding: '12px 16px',
                 backgroundColor: type === 'solo' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
                 borderRadius: '8px',
-                flex: 1,
-                transition: 'background-color 0.15s ease'
+                flex: 1
               }}>
                 <input
                   type="radio"
@@ -80,8 +83,7 @@ function CreateBoardModal({ onClose, onSuccess }) {
                   onChange={(e) => setType(e.target.value)}
                   style={{ display: 'none' }}
                 />
-                <span style={{ fontWeight: 500 }}>Solo</span>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Only you can access</span>
+                <span>Solo</span>
               </label>
               
               <label style={{ 
@@ -92,8 +94,7 @@ function CreateBoardModal({ onClose, onSuccess }) {
                 padding: '12px 16px',
                 backgroundColor: type === 'collaborative' ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
                 borderRadius: '8px',
-                flex: 1,
-                transition: 'background-color 0.15s ease'
+                flex: 1
               }}>
                 <input
                   type="radio"
@@ -103,8 +104,7 @@ function CreateBoardModal({ onClose, onSuccess }) {
                   onChange={(e) => setType(e.target.value)}
                   style={{ display: 'none' }}
                 />
-                <span style={{ fontWeight: 500 }}>Collaborative</span>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Share with team</span>
+                <span>Collaborative</span>
               </label>
             </div>
           </div>

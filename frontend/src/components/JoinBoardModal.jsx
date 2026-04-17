@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const BASE_URL = "https://task-management-project-7wls.onrender.com"
+
 function JoinBoardModal({ onClose, onSuccess }) {
   const [boardId, setBoardId] = useState('')
   const [sharePassword, setSharePassword] = useState('')
@@ -13,13 +15,18 @@ function JoinBoardModal({ onClose, onSuccess }) {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch('/api/boards/join', {
+
+      // ✅ FIXED LINE
+      const res = await fetch(`${BASE_URL}/api/boards/join`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ boardId: boardId.trim(), sharePassword: sharePassword.trim() })
+        body: JSON.stringify({
+          boardId: boardId.trim(),
+          sharePassword: sharePassword.trim()
+        })
       })
       
       const data = await res.json()
@@ -36,7 +43,7 @@ function JoinBoardModal({ onClose, onSuccess }) {
         }
       }
     } catch (error) {
-      setError('Failed to join board. Make sure the server is running.')
+      setError('Server is waking up, please wait...')
     } finally {
       setLoading(false)
     }
