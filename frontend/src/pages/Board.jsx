@@ -3,9 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useSocket } from '../hooks/useSocket'
 import { useAuth } from '../hooks/useAuth'
+import { API_BASE_URL } from '../config'
 import '../styles/Board.css'
-
-const BASE_URL = "https://task-management-project-7wls.onrender.com"
 
 function Board() {
   const { id } = useParams()
@@ -121,7 +120,7 @@ function Board() {
   const fetchBoard = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${BASE_URL}/api/boards/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/boards/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -148,7 +147,7 @@ function Board() {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${BASE_URL}/api/boards/${id}/lists`, {
+      const res = await fetch(`${API_BASE_URL}/api/boards/${id}/lists`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +173,7 @@ function Board() {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${BASE_URL}/api/boards/${id}/lists/${listId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/boards/${id}/lists/${listId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -190,7 +189,7 @@ function Board() {
   const handleUpdateListName = async (listId, newName) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${BASE_URL}/api/boards/${id}/lists/${listId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/boards/${id}/lists/${listId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -215,7 +214,7 @@ function Board() {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${BASE_URL}/api/boards/${id}/lists/${listId}/tasks`, {
+       const res = await fetch(`${API_BASE_URL}/api/boards/${id}/lists/${listId}/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -238,7 +237,7 @@ function Board() {
   const handleDeleteTask = async (listId, taskId) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await fetch(`${BASE_URL}/api/boards/${id}/lists/${listId}/tasks/${taskId}`, {
+       const res = await fetch(`${API_BASE_URL}/api/boards/${id}/lists/${listId}/tasks/${taskId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -285,7 +284,7 @@ function Board() {
 
       try {
         const token = localStorage.getItem('token')
-      const res =   await fetch(`${BASE_URL}/api/boards/${id}/tasks/move`, {
+        const res =   await fetch(`${API_BASE_URL}/api/boards/${id}/tasks/move`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

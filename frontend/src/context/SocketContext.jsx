@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useRef } from 'react'
 import { io } from 'socket.io-client'
+import { API_BASE_URL } from '../config'
 
 export const SocketContext = createContext()
 
@@ -11,7 +12,7 @@ export function SocketProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      const newSocket = io('https://task-management-project-7wls.onrender.com', {
+      const newSocket = io(API_BASE_URL, {
         auth: { token },
         transports: ['websocket', 'polling']
       })

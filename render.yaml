@@ -1,0 +1,46 @@
+# Render configuration for TaskFlow full-stack deployment
+# This defines two separate services: frontend (static) and backend (web service)
+
+services:
+  # Frontend static site
+  - type: static
+    name: taskflow-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: taskflow-backend
+          type: web
+          property: url
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # Backend API and WebSocket service
+  - type: web
+    name: taskflow-backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: taskflow-mongodb
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://taskflow-frontend.onrender.com
+
+# MongoDB database (optional - you can also use external MongoDB)
+databases:
+  - name: taskflow-mongodb
+    type: mongodb
+    plan: free

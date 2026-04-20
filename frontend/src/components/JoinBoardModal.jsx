@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-const BASE_URL = "https://task-management-project-7wls.onrender.com"
+import { API_BASE_URL } from '../config'
 
 function JoinBoardModal({ onClose, onSuccess }) {
   const [boardId, setBoardId] = useState('')
@@ -17,7 +16,7 @@ function JoinBoardModal({ onClose, onSuccess }) {
       const token = localStorage.getItem('token')
 
       // ✅ FIXED LINE
-      const res = await fetch(`${BASE_URL}/api/boards/join`, {
+       const res = await fetch(`${API_BASE_URL}/api/boards/join`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

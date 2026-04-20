@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-const BASE_URL = "https://task-management-project-7wls.onrender.com"
+import { API_BASE_URL } from '../config'
 
 function CreateBoardModal({ onClose, onSuccess }) {
   const [name, setName] = useState('Task Board')
@@ -17,7 +16,7 @@ function CreateBoardModal({ onClose, onSuccess }) {
       const token = localStorage.getItem('token')
 
       // ✅ FIXED LINE (IMPORTANT)
-      const res = await fetch(`${BASE_URL}/api/boards`, {
+       const res = await fetch(`${API_BASE_URL}/api/boards`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
